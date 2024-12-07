@@ -30,32 +30,32 @@ import { Calendar } from "@/components/ui/calendar"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { categories } from "../utils"
-import { CalendarIcon, Plus } from "lucide-react"
+import { CalendarIcon, Pencil, Plus } from "lucide-react"
 import { format } from "date-fns"
 
-import { addTask, getTasks } from "../db"
+import { getTasks, updateTask } from "../db"
 import { Task } from "../type"
 
 
-export default function AddTodo({ setTaskCallBack, pageSize, page, filter, sort, filterComplete }: { setTaskCallBack:(tasks: Task[]|null) => void, pageSize:number, page:number, filter:string, sort:string|null, filterComplete:boolean|null}) {
-  const [dateValue, setDate] = useState<Date>(new Date())
-  const [descriptionValue, setDesriptionValue] = useState<string>("")
-  const [categoryValue, setCategoryValue] = useState<string>("Personal")
+export default function EditTodo({ setTaskCallBack, task, pageSize, page, disabled, filter, sort, filterComplete }: { setTaskCallBack:(tasks: Task[]|null) => void, task:Task, pageSize:number, page:number, filter:string, sort:string|null, filterComplete:boolean|null, disabled:boolean }) {
+  const [dateValue, setDate] = useState<Date>(new Date(task.dueDate))
+  const [descriptionValue, setDesriptionValue] = useState<string>(task.description)
+  const [categoryValue, setCategoryValue] = useState<string>(task.category)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    setDesriptionValue("")
-    setCategoryValue("Personal")
-    setDate(new Date())
+    setDesriptionValue(task.description)
+    setCategoryValue(task.category)
+    setDate(new Date(task.dueDate))
   }, [open])
 
   const handleTaskCreate = () => {
-    addTask({
-      id: 0,
+    updateTask(task.id, {
+      id: task.id,
       description: descriptionValue,
       category: categoryValue,
       dueDate: format(dateValue, 'yyyy-MM-dd'),
-      isCompleted: false,
+      isCompleted: task.isCompleted,
     })
     async function fetchTasks() {
         const fetchedTasks = await getTasks(pageSize, page, filter, sort, filterComplete )
@@ -72,13 +72,17 @@ export default function AddTodo({ setTaskCallBack, pageSize, page, filter, sort,
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline"><Plus /></Button>
+        {
+            disabled
+            ?<Button variant="outline" className="bg-white text-black border hover:bg-gray-100" disabled> <Pencil /></Button>
+            : <Button variant="outline" className="bg-white text-black border hover:bg-gray-100"> <Pencil /></Button>
+        }
       </DialogTrigger>
       <DialogContent className="lg:max-w-[900px]">
         <DialogHeader>
-          <DialogTitle>Add Task</DialogTitle>
+          <DialogTitle>Edit Task</DialogTitle>
           <DialogDescription>
-            Add new to do task
+            Edit your to do task
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-4 py-4">
@@ -155,7 +159,7 @@ export default function AddTodo({ setTaskCallBack, pageSize, page, filter, sort,
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleTaskCreate}>Create Task</Button>
+          <Button type="submit" onClick={handleTaskCreate}>Update Task</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
