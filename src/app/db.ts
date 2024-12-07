@@ -103,7 +103,7 @@ export const getTasks = (size: number, page: number, filter:string, sort:string|
     });
 };
 
-export const getAllTasks = (): Promise<Task[]|null> => {
+export const getAllTasks = (): Promise<Task[]> => {
     return new Promise((resolve, reject) => {
         const db = connectdb();
 
@@ -121,7 +121,7 @@ export const getAllTasks = (): Promise<Task[]|null> => {
                     if (Array.isArray(tasks)) {
                         resolve(tasks); 
                     } else {
-                        reject(new Error("No tasks found"));
+                        reject([]);
                     }
                 } catch (e) {
                     reject(e);
@@ -131,7 +131,7 @@ export const getAllTasks = (): Promise<Task[]|null> => {
     });
 };
 
-export const getTasksCount = (): Promise<number> => {
+export const getTasksCount = (size: number, page: number, filter:string, filterComplete:boolean|null): Promise<number> => {
     return new Promise((resolve, reject) => {
         const db = connectdb();
 
@@ -140,12 +140,32 @@ export const getTasksCount = (): Promise<number> => {
             const transaction = db.transaction(["tasks"], "readonly");
             const objectStore = transaction.objectStore("tasks");
 
-            const countRequest = objectStore.count();
+            const all_task = objectStore.getAll();
+            all_task.onsuccess = (event: Event) => {
+                const start_index = page * size;
+                const advanced_tasks = (event.target as IDBRequest).result;
 
-            countRequest.onsuccess = (event: Event) => {
-                const count = (event.target as IDBRequest).result;
-
-                resolve(count)
+                try {
+                    if (Array.isArray(advanced_tasks)) {
+                        if (advanced_tasks.length <= 0) {
+                            resolve(0)
+                        }
+                        let tasks = advanced_tasks
+                        if (filter!==""){
+                            const filtered_tasks = advanced_tasks.filter((task: Task) => task.description.toLowerCase().includes(filter.toLowerCase()))
+                            tasks = filtered_tasks
+                        }
+                        if (filterComplete!=null) {
+                            const filtered_tasks = tasks.filter((task: Task) => task.isCompleted == filterComplete)
+                            tasks = filtered_tasks
+                        }
+                        resolve(tasks.length);
+                    } else {
+                        reject(new Error("No tasks found"));
+                    }
+                } catch (e) {
+                    reject(e);
+                }
             };
         };
     });

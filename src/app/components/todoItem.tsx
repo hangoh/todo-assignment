@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import { CheckCheck, CircleCheckBig, Pencil, Trash2 } from "lucide-react";
 import { Task } from "../type";

@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
@@ -5,7 +7,8 @@ export default function pageList({setPageCallBack, page, pageSize, totalTask}:{s
     const [totalPage, setTotalPage] = useState(1)
 
     useEffect(()=>{
-        setTotalPage(Math.ceil(totalTask/pageSize))
+        const totalPage = Math.ceil(totalTask/pageSize)
+        setTotalPage(totalPage)
     },[page, pageSize, totalTask])
 
     const handlePreviousPage = () => {

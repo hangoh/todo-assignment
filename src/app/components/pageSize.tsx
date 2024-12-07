@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Select,
     SelectContent,
@@ -8,9 +10,14 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 
-export default function pageSize({setPageSizeCallBack}: {setPageSizeCallBack:(pageSize: number) => void}) {
+export default function pageSize({setPageCallBack, setPageSizeCallBack}: {setPageCallBack:(page:number)=>void, setPageSizeCallBack:(pageSize: number) => void}) {
+    const handlePageSizeChange = (value: number) => {
+      setPageCallBack(0)
+      setPageSizeCallBack(value)
+    }
+
     return (
-      <Select defaultValue="5" onValueChange={(value) => setPageSizeCallBack(parseInt(value))}>
+      <Select defaultValue="5" onValueChange={(value) => handlePageSizeChange(parseInt(value))}>
         <SelectTrigger className="w-[75px]">
           <SelectValue placeholder="Page Size" />
         </SelectTrigger>
@@ -25,4 +32,4 @@ export default function pageSize({setPageSizeCallBack}: {setPageSizeCallBack:(pa
         </SelectContent>
       </Select>
     )
-  }
+}

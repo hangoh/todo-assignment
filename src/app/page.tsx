@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
 
 import AddTodo from "./components/addTodo";
 import TodoList from "./components/todoList";
@@ -14,6 +12,7 @@ import Calender from "./components/calender";
 import FilterComplete from "./components/filterComplete";
 import SortDate from "./components/sortDate";
 import PageList from "./components/pageList";
+import ExportExcel from "./components/exportExcel";
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]|null>(null)
@@ -27,36 +26,21 @@ export default function Home() {
   const isTaskProcessRunning = useRef(false);
 
   useEffect(() => {
+
+      isTaskProcessRunning.current = true;
       async function fetchTasks() {
-          isTaskProcessRunning.current = true;
           const fetchedTasks = await getTasks(pageSize, page, filter, sort, filterComplete )
           setTasks(fetchedTasks)
       }
       async function fetchTaskCounts() {
-          const taskCount= await getTasksCount()
+          const taskCount= await getTasksCount(pageSize, page, filter, filterComplete )
           setTotalTask(taskCount)
       }
       fetchTasks()
       fetchTaskCounts()
-      return () => {
-        isTaskProcessRunning.current = false;
-      };
+      console.log('hi')
   }, [page, pageSize, filter, sort, filterComplete])
 
-  useEffect(() => {
-    if (isTaskProcessRunning.current) {
-      // If TaskProcess has already run, skip the state change
-      return;
-    }
-
-    // Set the ref to true, so this block doesn't trigger again.
-    isTaskProcessRunning.current = true;
-
-    // Once the state has been set, we set the ref back to false
-    return () => {
-      isTaskProcessRunning.current = false;
-    };
-  }, [tasks]);
 
   const setTaskCallBack = (tasks: Task[] | null) => {
     setTasks(tasks)
@@ -85,36 +69,37 @@ export default function Home() {
 
         <div className="flex flex-row justify-between mb-5">
           <div>
-            <div className="flex flex-row gap-1">
-              <Input placeholder="Description" onChange={(e) => setFilter(e.target.value)} />
+            <div className="flex flex-row gap-3">
+              <ExportExcel/>
             </div>
           </div>
           <div className="flex flex-row ml-auto gap-3">
             <Calender />
-            <AddTodo 
+            {/* <AddTodo 
               setTaskCallBack={setTaskCallBack} 
               pageSize={pageSize} 
               page={page} 
               filter={filter} 
               sort={sort} 
               filterComplete={filterComplete} 
-            />
+            /> */}
           </div>
         </div>
 
         <div className="flex flex-row justify-between mb-5">
           <div>
-            <div className="flex flex-row gap-1">
+            <div className="flex flex-row gap-3">
+            <Input placeholder="Description" onChange={(e) => setFilter(e.target.value)} />
             </div>
           </div>
           <div className="flex flex-row ml-auto gap-3">
             <FilterComplete setfilterCompleteCallBack={setfilterCompleteCallBack} />
-            <PageSize setPageSizeCallBack={setPageSizeCallBack} />
+            <PageSize setPageCallBack={setPageCallBack} setPageSizeCallBack={setPageSizeCallBack} />
             <SortDate setSortDateCallBack={setSortDateCallBack} />
           </div>
         </div>
 
-        <TodoList 
+        <TodoList
           setTaskCallBack={setTaskCallBack} 
           tasks={tasks} 
           pageSize={pageSize} 
