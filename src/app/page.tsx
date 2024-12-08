@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 
 import AddTodo from "./components/addTodo";
@@ -23,11 +23,7 @@ export default function Home() {
   const [sort, setSort] = useState<string|null>(null)
   const [filterComplete, setFilterComplete] = useState<boolean|null>(null)
 
-  const isTaskProcessRunning = useRef(false);
-
   useEffect(() => {
-
-      isTaskProcessRunning.current = true;
       async function fetchTasks() {
           const fetchedTasks = await getTasks(pageSize, page, filter, sort, filterComplete )
           setTasks(fetchedTasks)
