@@ -1,16 +1,14 @@
-"use client"
-
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-export default function pageSize({setPageCallBack, setPageSizeCallBack}: {setPageCallBack:(page:number)=>void, setPageSizeCallBack:(pageSize: number) => void}) {
+export default function PageSize({setPageCallBack, setPageSizeCallBack}: {setPageCallBack:(page:number)=>void, setPageSizeCallBack:(pageSize: number) => void}) {
     const handlePageSizeChange = (value: number) => {
       setPageCallBack(0)
       setPageSizeCallBack(value)

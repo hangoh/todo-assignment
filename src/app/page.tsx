@@ -38,7 +38,6 @@ export default function Home() {
       }
       fetchTasks()
       fetchTaskCounts()
-      console.log('hi')
   }, [page, pageSize, filter, sort, filterComplete])
 
 
@@ -75,14 +74,14 @@ export default function Home() {
           </div>
           <div className="flex flex-row ml-auto gap-3">
             <Calender />
-            {/* <AddTodo 
+            <AddTodo 
               setTaskCallBack={setTaskCallBack} 
               pageSize={pageSize} 
               page={page} 
               filter={filter} 
               sort={sort} 
               filterComplete={filterComplete} 
-            /> */}
+            />
           </div>
         </div>
 

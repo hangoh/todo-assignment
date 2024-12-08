@@ -1,16 +1,14 @@
-"use client"
-
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-export default function sortDate({ setSortDateCallBack}: { setSortDateCallBack:(sortDate: string|null) => void}) {
+export default function SortDate({ setSortDateCallBack}: { setSortDateCallBack:(sortDate: string|null) => void}) {
     return (
       <Select defaultValue="null" onValueChange={(value) =>  setSortDateCallBack(value === "null" ? null : value)}>
         <SelectTrigger className="w-[120px]">

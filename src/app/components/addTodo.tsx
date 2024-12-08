@@ -29,10 +29,10 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Calendar } from "@/components/ui/calendar"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { categories } from "../utils"
 import { CalendarIcon, Plus } from "lucide-react"
 import { format } from "date-fns"
 
+import { categories } from "../utils"
 import { addTask, getTasks } from "../db"
 import { Task } from "../type"
 

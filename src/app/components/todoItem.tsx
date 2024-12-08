@@ -1,7 +1,6 @@
-"use client"
-
 import { Button } from "@/components/ui/button";
-import { CheckCheck, CircleCheckBig, Pencil, Trash2 } from "lucide-react";
+import { CheckCheck, CircleCheckBig, Trash2 } from "lucide-react";
+
 import { Task } from "../type";
 import { deleteTask, getTasks, setTaskCompleted } from "../db";
 import EditTodo from "./editTodo";

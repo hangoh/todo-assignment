@@ -1,13 +1,17 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
-export default function pageList({setPageCallBack, page, pageSize, totalTask}:{setPageCallBack:(page:number)=>void, page:number, pageSize:number, totalTask:number}) {
+export default function PageList({setPageCallBack, page, pageSize, totalTask}:{setPageCallBack:(page:number)=>void, page:number, pageSize:number, totalTask:number}) {
     const [totalPage, setTotalPage] = useState(1)
 
     useEffect(()=>{
         const totalPage = Math.ceil(totalTask/pageSize)
+        if (totalPage==0){
+            setTotalPage(1)
+            return
+        }
         setTotalPage(totalPage)
     },[page, pageSize, totalTask])
 

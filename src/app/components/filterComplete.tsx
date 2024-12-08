@@ -1,16 +1,14 @@
-"use client"
-
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-export default function filterComplete({ setfilterCompleteCallBack}: { setfilterCompleteCallBack:(filterComplete: boolean|null) => void}) {
+export default function FilterComplete({ setfilterCompleteCallBack}: { setfilterCompleteCallBack:(filterComplete: boolean|null) => void}) {
     return (
       <Select defaultValue="null" onValueChange={(value) =>  setfilterCompleteCallBack(value === "null" ? null : value === "true"? true : false)}>
         <SelectTrigger className="w-[180px]">
