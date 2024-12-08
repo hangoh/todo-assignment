@@ -13,6 +13,9 @@ export default function PageList({setPageCallBack, page, pageSize, totalTask}:{s
             return
         }
         setTotalPage(totalPage)
+        if (page+1>totalPage){
+            setPageCallBack(page-1)
+        }
     },[page, pageSize, totalTask])
 
     const handlePreviousPage = () => {

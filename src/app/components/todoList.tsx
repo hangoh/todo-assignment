@@ -43,7 +43,7 @@ export default function TodoList({ setTaskCallBack, tasks, pageSize, page, filte
     return (
         <div className="w-full">
             {
-                tasks
+                tasks && tasks.length > 0
                 ? <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Droppable droppableId="task-list">
                         {(provided) => (

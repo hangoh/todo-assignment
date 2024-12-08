@@ -38,7 +38,7 @@ export default function Home() {
       }
       fetchTasks()
       fetchTaskCounts()
-  }, [page, pageSize, filter, sort, filterComplete])
+  }, [tasks, page, pageSize, filter, sort, filterComplete])
 
 
   const setTaskCallBack = (tasks: Task[] | null) => {
