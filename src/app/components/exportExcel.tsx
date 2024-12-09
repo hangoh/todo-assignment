@@ -13,6 +13,9 @@ import { getAllTasks } from "../db"
 export default function ExportExcel() {
   const exportDataToExcel = async () => {
     const taskData = await getAllTasks()
+    if (taskData.length<=0) {
+      return
+    }
 
     const workbook = new ExcelJS.Workbook()
 

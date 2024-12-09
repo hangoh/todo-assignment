@@ -58,7 +58,7 @@ export default function ImportTodo({ setTaskCallBack, pageSize, page, filter, so
 
     const readExcelFile = async (arrayBuffer: ArrayBuffer) => {
         const workbook = new ExcelJS.Workbook();
-        const rows: any = [];
+        const rows: { [key: string]: string | number | boolean }[] = [];
 
         await workbook.xlsx.load(arrayBuffer);
 
@@ -87,7 +87,7 @@ export default function ImportTodo({ setTaskCallBack, pageSize, page, filter, so
     }
 
     const readCsvFile = (arrayBuffer:ArrayBuffer) => {
-        const rows: any = [];
+        const rows: { [key: string]: string | number | boolean }[] = [];
         const decoder = new TextDecoder('utf-8');
         const csvContent = decoder.decode(arrayBuffer);
         const csvRows = csvContent.split('\n');
@@ -113,7 +113,11 @@ export default function ImportTodo({ setTaskCallBack, pageSize, page, filter, so
 
     const handleGenerateData = async(dataArray:{ [key: string]: string | number | boolean }[])=>{
         dataArray.forEach((data: { [key: string]: string | number | boolean }) => {
-            if( data["description"] == "" || data["category"]=="" || data['duedate'] == "" ){
+            if( 
+                (data["description"] == "" || data["category"] == "" || data['duedate'] == "") ||
+                (data["description"] == null || data["category"] == null || data['duedate'] == null) ||
+                (data["description"] == undefined || data["category"] == undefined || data['duedate'] == undefined)
+             ){
                 return
             }
             addTask({

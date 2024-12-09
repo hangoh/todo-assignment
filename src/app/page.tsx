@@ -113,6 +113,7 @@ export default function Home() {
           filterComplete={filterComplete} 
         />
         <PageList setPageCallBack={setPageCallBack} page={page} pageSize={pageSize} totalTask={totalTask} />
+        <div className="footer mt-4"></div>
       </div>
     </main>
   );
