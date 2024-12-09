@@ -13,6 +13,7 @@ import FilterComplete from "./components/filterComplete";
 import SortDate from "./components/sortDate";
 import PageList from "./components/pageList";
 import ExportExcel from "./components/exportExcel";
+import ImportTodo from "./components/importTodo";
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]|null>(null)
@@ -65,6 +66,14 @@ export default function Home() {
         <div className="flex flex-row justify-between mb-5">
           <div>
             <div className="flex flex-row gap-3">
+              <ImportTodo 
+                setTaskCallBack={setTaskCallBack} 
+                pageSize={pageSize} 
+                page={page} 
+                filter={filter} 
+                sort={sort} 
+                filterComplete={filterComplete}
+              />
               <ExportExcel/>
             </div>
           </div>

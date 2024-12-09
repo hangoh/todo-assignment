@@ -42,12 +42,21 @@ export default function AddTodo({ setTaskCallBack, pageSize, page, filter, sort,
   const [descriptionValue, setDesriptionValue] = useState<string>("")
   const [categoryValue, setCategoryValue] = useState<string>("Personal")
   const [open, setOpen] = useState(false)
+  const [disabledAdd, setDisabledAdd] = useState(false)
 
   useEffect(() => {
     setDesriptionValue("")
     setCategoryValue("Personal")
     setDate(new Date())
   }, [open])
+
+  useEffect(()=>{
+    if (descriptionValue==""){
+      setDisabledAdd(true)
+    } else {
+      setDisabledAdd(false)
+    }
+  }, [descriptionValue])
 
   const handleTaskCreate = () => {
     addTask({
@@ -89,7 +98,9 @@ export default function AddTodo({ setTaskCallBack, pageSize, page, filter, sort,
             <Textarea 
               id="description"
               defaultValue={descriptionValue}
-              onChange={(e) => setDesriptionValue(e.target.value)}
+              onChange={(e) => {
+                setDesriptionValue(e.target.value)
+              }}
             />
           </div>
           <div className="flex flex-col gap-1">
@@ -155,7 +166,11 @@ export default function AddTodo({ setTaskCallBack, pageSize, page, filter, sort,
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleTaskCreate}>Create Task</Button>
+          {
+            disabledAdd
+            ? <Button type="submit" className="bg-gray-500" disabled>Create Task</Button>
+            : <Button type="submit" onClick={handleTaskCreate}>Create Task</Button>
+          }
         </DialogFooter>
       </DialogContent>
     </Dialog>

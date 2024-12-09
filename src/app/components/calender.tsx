@@ -37,37 +37,37 @@ export default function Calender() {
 
     return (
         <Dialog>
-        <DialogTrigger asChild>
-            <Button variant="outline"><CalendarIcon /></Button>
-        </DialogTrigger>
-        <DialogContent className="lg:max-w-[900px]">
-            <DialogHeader>
-            <DialogTitle>Calender</DialogTitle>
-            <DialogDescription>
-                Calender View
-            </DialogDescription>
-            </DialogHeader>
-            <FullCalendar
-                plugins={[dayGridPlugin]}
-                headerToolbar={{
-                    left: "prev,next",
-                    center: "title",
-                    right:"today"
-                }}
-                initialView="dayGridMonth"
-                initialEvents={processAndSetTask}
-            />
-            <div className="flex flex-wrap gap-4">
-                {
-                    categories.map((category) => (
-                        <div className="flex flex-row gap-1 items-center" key={category}>
-                            <div className="w-4 h-4 rounded-full" style={{ backgroundColor: categoryColors[category as keyof typeof categoryColors] }}></div>
-                            <div>{category}</div>
-                        </div>
-                    ))
-                }
-            </div>
-        </DialogContent>
+            <DialogTrigger asChild>
+                <Button variant="outline"><CalendarIcon /></Button>
+            </DialogTrigger>
+            <DialogContent className="lg:max-w-[900px]">
+                <DialogHeader>
+                <DialogTitle>Calender</DialogTitle>
+                <DialogDescription>
+                    Calender View
+                </DialogDescription>
+                </DialogHeader>
+                <FullCalendar
+                    plugins={[dayGridPlugin]}
+                    headerToolbar={{
+                        left: "prev,next",
+                        center: "title",
+                        right:"today"
+                    }}
+                    initialView="dayGridMonth"
+                    initialEvents={processAndSetTask}
+                />
+                <div className="flex flex-wrap gap-2">
+                    {
+                        categories.map((category) => (
+                            <div className="flex flex-row gap-1 items-center" key={category}>
+                                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: categoryColors[category as keyof typeof categoryColors] }}></div>
+                                <div>{category}</div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </DialogContent>
         </Dialog>
     );
 }

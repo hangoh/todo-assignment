@@ -1,3 +1,9 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
 import { FolderUp } from "lucide-react"
 import ExcelJS from "exceljs" 
@@ -38,8 +44,17 @@ export default function ExportExcel() {
   }
 
   return (
-    <Button type="button" className="bg-white text-gray-500 border hover:bg-gray-100" onClick={handleExport}>
-      <FolderUp />
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button type="button" className="bg-white text-gray-500 border hover:bg-gray-100" onClick={handleExport}>
+            <FolderUp />
+        </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Export To Do task(s) in Excel</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
